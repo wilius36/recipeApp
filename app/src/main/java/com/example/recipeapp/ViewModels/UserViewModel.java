@@ -28,9 +28,27 @@ public class UserViewModel extends AndroidViewModel {
     public void createUserWithEmailAndPassword(String email, String password, MyFirebaseCallBack<Boolean> myFirebaseCallBack){
         userModel.setEmail(email);
         userModel.setPassword(password);
-        userRepository.createUserWithEmailAndPassword(userModel ,myFirebaseCallBack);
+        userRepository.createUserWithEmailAndPassword(email, password ,myFirebaseCallBack);
     }
 
+    //Vartotojo profilio uzsaugojimas
+    public void saveUserToDataBase(){
+        userRepository.saveUserToDataBase(getUser());
+    }
 
+    public UserModel getUser(){
+        return userModel;
+    }
 
+    public void setUserEmail (String email) {
+        userModel.setEmail(email);
+    }
+
+    public void setUserUsername (String username) {
+        userModel.setUsername(username);
+    }
+
+    public void setUserType (String type) {
+        userModel.setUserType(type);
+    }
 }

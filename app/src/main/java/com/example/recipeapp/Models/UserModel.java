@@ -12,14 +12,32 @@ public class UserModel {
 
     private List<String> favoriteIds;
 
-    public UserModel(String id, String email, String password, String userType) {
+    public UserModel(String id, String email, String password, String userType, String username, List<String> favoriteIds) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.userType = userType;
+        this.username = username;
+        this.favoriteIds = favoriteIds;
     }
 
     public UserModel() {
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public List<String> getFavoriteIds() {
+        return favoriteIds;
+    }
+
+    public void setFavoriteIds(List<String> favoriteIds) {
+        this.favoriteIds = favoriteIds;
     }
 
     public String getUserType() {

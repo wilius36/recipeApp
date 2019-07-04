@@ -1,25 +1,29 @@
-package com.example.recipeapp.Fragments.InactiveUserFragments;
+package com.example.recipeapp.Views.Fragments.InactiveUserFragments;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.recipeapp.R;
+import com.example.recipeapp.Utils.MyFirebaseCallBack;
 import com.example.recipeapp.ViewModels.UserViewModel;
+import com.example.recipeapp.Views.Activities.MainActivity;
 
 public class RegisterFragment extends Fragment {
 
     private View view;
     private Switch switch1;
-    private EditText register_username, register_email, register_password;
+    private EditText register_username,
+            register_email,
+            register_password;
     private String userType = "user";
     private Button register_button;
     private UserViewModel userViewModel;
@@ -41,20 +45,7 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                registrationMethod(register_email, register_password);
-            }
-        });
-
-        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    register_username.setVisibility(View.VISIBLE);
-                    userType = "creator";
-                } else {
-                    register_username.setVisibility(View.GONE);
-                    userType = "user";
-                }
+                registrationMethod();
             }
         });
 
@@ -62,20 +53,31 @@ public class RegisterFragment extends Fragment {
     }
 
     //Registracijos metodas
-    private void registrationMethod (EditText register_email, EditText register_password) {
+    private void registrationMethod () {
 
         String txt_email = register_email.getText().toString();
         String txt_password = register_password.getText().toString();
+
+        String userType = "vartotojas";
+
+        if (switch1.isChecked()) {
+            userType += "kurejas";
+        }
+
+        userViewModel.setUserUsername(register_username.getText().toString());
+        userViewModel.setUserEmail(register_email.getText().toString());
+        userViewModel.setUserType(userType);
 
         if (txt_email.isEmpty() || txt_password.isEmpty()) {
             showMessage("Užpildykite visus laukelius");
         }
 
-        userViewModel.createUserWithEmailAndPassword(txt_email, txt_password, new com.example.recipeapp.Utils.MyFirebaseCallBack<Boolean>() {
+        userViewModel.createUserWithEmailAndPassword(txt_email, txt_password, new MyFirebaseCallBack<Boolean>() {
             @Override
             public void onSuccessCallback(Boolean object) {
                 if (object) {
-                    showMessage("Pavyko");
+                    userViewModel.saveUserToDataBase();
+                    openMainActivity();
                 } else {
                     showMessage("Įvyko klaida");
                     bactToStartingViewState();
@@ -88,6 +90,13 @@ public class RegisterFragment extends Fragment {
                 bactToStartingViewState();
             }
         });
+    }
+
+    //Atidaro kita langa
+    private void openMainActivity() {
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     //Sukuriamas Toast kad nereiktu kurti kiekviena karta

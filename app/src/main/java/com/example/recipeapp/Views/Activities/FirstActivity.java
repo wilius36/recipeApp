@@ -1,16 +1,17 @@
-package com.example.recipeapp;
+package com.example.recipeapp.Views.Activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import com.example.recipeapp.Fragments.InactiveUserFragments.FirstFragment;
+import com.example.recipeapp.Views.Fragments.InactiveUserFragments.FirstFragment;
+import com.example.recipeapp.R;
 
-public class MainActivity extends AppCompatActivity {
+public class FirstActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_first);
 
         if (savedInstanceState == null) {
             FirstFragment f1= new FirstFragment();

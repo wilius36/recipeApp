@@ -1,4 +1,4 @@
-package com.example.recipeapp.Fragments.InactiveUserFragments;
+package com.example.recipeapp.Views.Fragments.InactiveUserFragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,6 +16,9 @@ public class FirstFragment extends Fragment {
     private Button first_login_button, first_register_button;
     private View view;
 
+    private RegisterFragment registerFragment = new RegisterFragment();
+    private LoginFragment loginFragment = new LoginFragment();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -27,14 +30,14 @@ public class FirstFragment extends Fragment {
         first_login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openLoginFragment();
+                openFragment(loginFragment);
             }
         });
 
         first_register_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openRegisterFragment();
+                openFragment(registerFragment);
             }
         });
 
@@ -42,22 +45,11 @@ public class FirstFragment extends Fragment {
         return view;
     }
 
-    //Atidaro registracijos fragmenta
-    private void openRegisterFragment() {
-        RegisterFragment registerFragment= new RegisterFragment();
+    //Atidaro fragmenta
+    private void openFragment(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.main_frame, registerFragment, "RegisterFragment");
-        transaction.addToBackStack("FirstFragment");
-        transaction.commit();
-    }
-
-    //Atidaro prisijungimo fragmenta
-    private void openLoginFragment() {
-        LoginFragment loginFragment= new LoginFragment();
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.main_frame, loginFragment, "LoginFragment");
+        transaction.replace(R.id.main_frame, fragment);
         transaction.addToBackStack("FirstFragment");
         transaction.commit();
     }

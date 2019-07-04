@@ -1,10 +1,9 @@
-package com.example.recipeapp.Fragments.InactiveUserFragments;
+package com.example.recipeapp.Views.Fragments.InactiveUserFragments;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.recipeapp.Fragments.ActiveUserFragments.MainFragment;
 import com.example.recipeapp.R;
+import com.example.recipeapp.Utils.MyFirebaseCallBack;
 import com.example.recipeapp.ViewModels.UserViewModel;
+import com.example.recipeapp.Views.Activities.MainActivity;
 
 public class LoginFragment extends Fragment {
 
@@ -36,7 +36,7 @@ public class LoginFragment extends Fragment {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginMethod(login_email, login_password);
+                loginMethod();
             }
         });
 
@@ -44,7 +44,7 @@ public class LoginFragment extends Fragment {
     }
 
     //Prisijungimo metodas
-    private void loginMethod(EditText login_email, EditText login_password) {
+    private void loginMethod() {
 
         String txt_email = login_email.getText().toString();
         String txt_password = login_password.getText().toString();
@@ -53,7 +53,7 @@ public class LoginFragment extends Fragment {
             showMessage("Užpildykite visus laukelius");
         }
 
-        userViewModel.signInUserWithEmailAndPassword(txt_email, txt_password, new com.example.recipeapp.Utils.MyFirebaseCallBack<Boolean>() {
+        userViewModel.signInUserWithEmailAndPassword(txt_email, txt_password, new MyFirebaseCallBack<Boolean>() {
             @Override
             public void onSuccessCallback(Boolean object) {
                 if (object) {
@@ -72,14 +72,11 @@ public class LoginFragment extends Fragment {
         });
     }
 
-    //Atidaro pagrindini fragmenta
+    //Atidaro kita langa
     private void openMainFragment() {
-        MainFragment mainFragment= new MainFragment();
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.main_frame, mainFragment, "MainFragment");
-        transaction.addToBackStack(null);
-        transaction.commit();
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     //Vaizdu inicijavimas
