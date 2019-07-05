@@ -61,7 +61,7 @@ public class RegisterFragment extends Fragment {
         String userType = "vartotojas";
 
         if (switch1.isChecked()) {
-            userType += "kurejas";
+            userType = "kurejas";
         }
 
         userViewModel.setUserUsername(register_username.getText().toString());
@@ -78,9 +78,6 @@ public class RegisterFragment extends Fragment {
                 if (object) {
                     userViewModel.saveUserToDataBase();
                     openMainActivity();
-                } else {
-                    showMessage("Įvyko klaida");
-                    bactToStartingViewState();
                 }
             }
 

@@ -58,9 +58,6 @@ public class LoginFragment extends Fragment {
             public void onSuccessCallback(Boolean object) {
                 if (object) {
                     openMainFragment();
-                } else {
-                    showMessage("Įvyko klaida");
-                    bactToStartingViewState();
                 }
             }
 

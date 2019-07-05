@@ -7,25 +7,25 @@ public class RecepieModel {
     private String id;
     private String mealType;
     private String title;
-    private String description;
+    private String shortDescription;
     private double sumOfRating;
     private int totalPeopleRatedCount;
-    private String factureDuration;
+    private String factureDescription;
     private String factureDificulty;
     private String postDate;
 
     private List<IngredientsModel> ingredients;
 
-    public RecepieModel(String id, String mealType, String title, String description,
-                        double sumOfRating, int totalPeopleRatedCount, String factureDuration,
+    public RecepieModel(String id, String mealType, String title, String shortDescription,
+                        double sumOfRating, int totalPeopleRatedCount, String factureDescription,
                         String factureDificulty, String postDate, List<IngredientsModel> ingredients) {
         this.id = id;
         this.mealType = mealType;
         this.title = title;
-        this.description = description;
+        this.shortDescription = shortDescription;
         this.sumOfRating = sumOfRating;
         this.totalPeopleRatedCount = totalPeopleRatedCount;
-        this.factureDuration = factureDuration;
+        this.factureDescription = factureDescription;
         this.factureDificulty = factureDificulty;
         this.postDate = postDate;
         this.ingredients = ingredients;
@@ -59,11 +59,11 @@ public class RecepieModel {
     }
 
     public String getDescription() {
-        return description;
+        return shortDescription;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.shortDescription = description;
     }
 
     public double getSumOfRating() {
@@ -83,11 +83,11 @@ public class RecepieModel {
     }
 
     public String getFactureDuration() {
-        return factureDuration;
+        return factureDescription;
     }
 
     public void setFactureDuration(String factureDuration) {
-        this.factureDuration = factureDuration;
+        this.factureDescription = factureDuration;
     }
 
     public String getFactureDificulty() {

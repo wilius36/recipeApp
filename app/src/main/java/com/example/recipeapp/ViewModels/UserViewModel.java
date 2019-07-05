@@ -36,6 +36,10 @@ public class UserViewModel extends AndroidViewModel {
         userRepository.saveUserToDataBase(getUser());
     }
 
+    public void getUserData(MyFirebaseCallBack<UserModel> myFirebaseCallBack){
+        userRepository.getUserData(myFirebaseCallBack);
+    }
+
     public UserModel getUser(){
         return userModel;
     }
