@@ -12,13 +12,13 @@ public class RecepieModel {
     private int totalPeopleRatedCount;
     private String factureDescription;
     private String factureDificulty;
-    private String postDate;
+    private long postDate;
 
     private List<IngredientsModel> ingredients;
 
     public RecepieModel(String id, String mealType, String title, String shortDescription,
                         double sumOfRating, int totalPeopleRatedCount, String factureDescription,
-                        String factureDificulty, String postDate, List<IngredientsModel> ingredients) {
+                        String factureDificulty, long postDate, List<IngredientsModel> ingredients) {
         this.id = id;
         this.mealType = mealType;
         this.title = title;
@@ -32,6 +32,22 @@ public class RecepieModel {
     }
 
     public RecepieModel() {
+    }
+
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
+
+    public String getFactureDescription() {
+        return factureDescription;
+    }
+
+    public void setFactureDescription(String factureDescription) {
+        this.factureDescription = factureDescription;
     }
 
     public String getId() {
@@ -98,11 +114,11 @@ public class RecepieModel {
         this.factureDificulty = factureDificulty;
     }
 
-    public String getPostDate() {
+    public long getPostDate() {
         return postDate;
     }
 
-    public void setPostDate(String postDate) {
+    public void setPostDate(long postDate) {
         this.postDate = postDate;
     }
 

@@ -16,7 +16,6 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.auth.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +33,7 @@ public class UserRepository {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         firebaseFirestore = FirebaseFirestore.getInstance();
+        userCollectionReference = firebaseFirestore.collection("users");
     }
 
     //Prisijungimas prie programeles
@@ -82,7 +82,7 @@ public class UserRepository {
         user.put("email", userModel.getEmail());
         user.put("type", userModel.getUserType());
 
-        firebaseFirestore.collection("users").document(userId)
+        userCollectionReference.document(userId)
                 .set(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -99,8 +99,7 @@ public class UserRepository {
     }
 
     public void getUserData (final MyFirebaseCallBack<UserModel> myFirebaseCallBack) {
-        DocumentReference docRef = firebaseFirestore.collection("users").document(currentUser.getUid());
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        userCollectionReference.document(currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {

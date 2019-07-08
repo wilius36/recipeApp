@@ -1,4 +1,4 @@
-package com.example.recipeapp.Views.Fragments.InactiveUserFragments;
+package com.example.recipeapp.Views.Fragments.LogRegUserFragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,7 +13,8 @@ import com.example.recipeapp.R;
 
 public class FirstFragment extends Fragment {
 
-    private Button first_login_button, first_register_button;
+    private Button first_login_button;
+    private Button first_register_button;
     private View view;
 
     private RegisterFragment registerFragment = new RegisterFragment();
