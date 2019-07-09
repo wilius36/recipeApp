@@ -17,28 +17,25 @@ public class FirstFragment extends Fragment {
     private Button first_register_button;
     private View view;
 
-    private RegisterFragment registerFragment = new RegisterFragment();
-    private LoginFragment loginFragment = new LoginFragment();
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_first, container, false);
 
-        viewInitialization();
+        viewsInitialization();
 
         first_login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openFragment(loginFragment);
+                openFragment(new LoginFragment());
             }
         });
 
         first_register_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openFragment(registerFragment);
+                openFragment(new RegisterFragment());
             }
         });
 
@@ -56,7 +53,7 @@ public class FirstFragment extends Fragment {
     }
 
     //Vaizdu inicijavimas
-    private void viewInitialization() {
+    private void viewsInitialization() {
         first_login_button = view.findViewById(R.id.first_login_button);
         first_register_button = view.findViewById(R.id.first_register_button);
     }

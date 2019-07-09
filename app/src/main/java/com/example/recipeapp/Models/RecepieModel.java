@@ -8,7 +8,7 @@ public class RecepieModel {
     private String mealType;
     private String title;
     private String shortDescription;
-    private double sumOfRating;
+    private int sumOfRating;
     private int totalPeopleRatedCount;
     private String factureDescription;
     private String factureDificulty;
@@ -17,7 +17,7 @@ public class RecepieModel {
     private List<IngredientsModel> ingredients;
 
     public RecepieModel(String id, String mealType, String title, String shortDescription,
-                        double sumOfRating, int totalPeopleRatedCount, String factureDescription,
+                        int sumOfRating, int totalPeopleRatedCount, String factureDescription,
                         String factureDificulty, long postDate, List<IngredientsModel> ingredients) {
         this.id = id;
         this.mealType = mealType;
@@ -82,11 +82,11 @@ public class RecepieModel {
         this.shortDescription = description;
     }
 
-    public double getSumOfRating() {
+    public int getSumOfRating() {
         return sumOfRating;
     }
 
-    public void setSumOfRating(double sumOfRating) {
+    public void setSumOfRating(int sumOfRating) {
         this.sumOfRating = sumOfRating;
     }
 

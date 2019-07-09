@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.recipeapp.Models.UserModel;
 import com.example.recipeapp.R;
 import com.example.recipeapp.Utils.MyFirebaseCallBack;
 import com.example.recipeapp.ViewModels.UserViewModel;
@@ -24,7 +25,6 @@ public class RegisterFragment extends Fragment {
     private EditText register_username;
     private EditText register_email;
     private EditText register_password;
-    private String userType = "user";
     private Button register_button;
     private UserViewModel userViewModel;
 
@@ -35,11 +35,7 @@ public class RegisterFragment extends Fragment {
 
         userViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
 
-        switch1 = view.findViewById(R.id.switch1);
-        register_username = view.findViewById(R.id.register_username);
-        register_email = view.findViewById(R.id.register_email);
-        register_password = view.findViewById(R.id.register_password);
-        register_button = view.findViewById(R.id.register_button);
+        viewsInitialization();
 
         register_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,21 +48,32 @@ public class RegisterFragment extends Fragment {
         return view;
     }
 
+    //Vaizdu inicijavimas
+    private void viewsInitialization() {
+        switch1 = view.findViewById(R.id.switch1);
+        register_username = view.findViewById(R.id.register_username);
+        register_email = view.findViewById(R.id.register_email);
+        register_password = view.findViewById(R.id.register_password);
+        register_button = view.findViewById(R.id.register_button);
+    }
+
     //Registracijos metodas
     private void registrationMethod () {
 
         String txt_email = register_email.getText().toString();
         String txt_password = register_password.getText().toString();
 
-        String userType = "vartotojas";
+        String userType = "user";
 
         if (switch1.isChecked()) {
-            userType = "kurejas";
+            userType = "creator";
         }
 
-        userViewModel.setUserUsername(register_username.getText().toString());
-        userViewModel.setUserEmail(register_email.getText().toString());
-        userViewModel.setUserType(userType);
+        final UserModel userModel = new UserModel();
+
+        userModel.setUsername(register_username.getText().toString());
+        userModel.setEmail(register_email.getText().toString());
+        userModel.setUserType(userType);
 
         if (txt_email.isEmpty() || txt_password.isEmpty()) {
             showMessage("Užpildykite visus laukelius");
@@ -76,8 +83,18 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onSuccessCallback(Boolean object) {
                 if (object) {
-                    userViewModel.saveUserToDataBase();
-                    openMainActivity();
+                    userViewModel.saveUserToDataBase(userModel, new MyFirebaseCallBack<Boolean>() {
+                        @Override
+                        public void onSuccessCallback(Boolean object) {
+                            openMainActivity();
+                        }
+
+                        @Override
+                        public void onFailureCallback(String message) {
+                            showMessage(message);
+                        }
+                    });
+
                 }
             }
 
@@ -101,7 +118,7 @@ public class RegisterFragment extends Fragment {
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
-    //Isjungia loading bar. Bei nustato visus laukelius tuscius
+    //Nustato visus laukelius tuscius
     private void bactToStartingViewState() {
         register_username.setText("");
         register_email.setText("");

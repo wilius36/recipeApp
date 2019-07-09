@@ -32,7 +32,7 @@ public class LoginFragment extends Fragment {
 
         userViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
 
-        viewInitialization();
+        viewsInitialization();
 
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +78,7 @@ public class LoginFragment extends Fragment {
     }
 
     //Vaizdu inicijavimas
-    private void viewInitialization() {
+    private void viewsInitialization() {
         login_email = view.findViewById(R.id.login_email);
         login_password = view.findViewById(R.id.login_password);
         login_button = view.findViewById(R.id.login_button);
@@ -89,7 +89,7 @@ public class LoginFragment extends Fragment {
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
-    //Isjungia loading bar. Bei nustato visus laukelius tuscius
+    //Nustato visus laukelius tuscius
     private void bactToStartingViewState() {
         login_email.setText("");
         login_password.setText("");

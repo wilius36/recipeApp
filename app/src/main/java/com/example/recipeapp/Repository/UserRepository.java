@@ -13,7 +13,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -34,6 +33,11 @@ public class UserRepository {
         currentUser = mAuth.getCurrentUser();
         firebaseFirestore = FirebaseFirestore.getInstance();
         userCollectionReference = firebaseFirestore.collection("users");
+    }
+
+    //Patikrina ar vartotojas yra prisijunges
+    public FirebaseUser checkIfUserLoggedIn(){
+        return mAuth.getCurrentUser();
     }
 
     //Prisijungimas prie programeles
@@ -72,9 +76,8 @@ public class UserRepository {
     }
 
     //Vartotojo profilio uzsaugojimas
-    public void saveUserToDataBase (UserModel userModel) {
+    public void saveUserToDataBase (UserModel userModel, final MyFirebaseCallBack<Boolean> myFirebaseCallBack) {
 
-        currentUser = mAuth.getCurrentUser();
         String userId = currentUser.getUid();
 
         Map<String, Object> user = new HashMap<>();
@@ -88,16 +91,19 @@ public class UserRepository {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d(TAG, "DocumentSnapshot successfully written!");
+                myFirebaseCallBack.onSuccessCallback(true);
             }
         })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error writing document", e);
+                        myFirebaseCallBack.onFailureCallback(e.getMessage());
                     }
                 });
     }
 
+    //Vartotojo profilio duomenu gavimas
     public void getUserData (final MyFirebaseCallBack<UserModel> myFirebaseCallBack) {
         userCollectionReference.document(currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
