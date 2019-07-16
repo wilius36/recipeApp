@@ -2,9 +2,10 @@ package com.example.recipeapp.Models;
 
 import java.util.List;
 
-public class RecepieModel {
+public class RecipeModel {
 
     private String id;
+    private String creatorId;
     private String mealType;
     private String title;
     private String shortDescription;
@@ -14,12 +15,19 @@ public class RecepieModel {
     private String factureDificulty;
     private long postDate;
 
+    private boolean userRatedRecipe;
+    private List<String> usersWhoRatedRecipeId;
     private List<IngredientsModel> ingredients;
 
-    public RecepieModel(String id, String mealType, String title, String shortDescription,
-                        int sumOfRating, int totalPeopleRatedCount, String factureDescription,
-                        String factureDificulty, long postDate, List<IngredientsModel> ingredients) {
+    //Kas ivertino, recepto id, kiek ivertino, suma ivertinimo
+
+
+    public RecipeModel(String id, String creatorId, String mealType, String title, String shortDescription,
+                       int sumOfRating, int totalPeopleRatedCount, String factureDescription,
+                       String factureDificulty, long postDate, boolean userRatedRecipe,
+                       List<String> usersWhoRatedRecipeId, List<IngredientsModel> ingredients) {
         this.id = id;
+        this.creatorId = creatorId;
         this.mealType = mealType;
         this.title = title;
         this.shortDescription = shortDescription;
@@ -28,10 +36,36 @@ public class RecepieModel {
         this.factureDescription = factureDescription;
         this.factureDificulty = factureDificulty;
         this.postDate = postDate;
+        this.userRatedRecipe = userRatedRecipe;
+        this.usersWhoRatedRecipeId = usersWhoRatedRecipeId;
         this.ingredients = ingredients;
     }
 
-    public RecepieModel() {
+    public RecipeModel() {
+    }
+
+    public boolean isUserRatedRecipe() {
+        return userRatedRecipe;
+    }
+
+    public void setUserRatedRecipe(boolean userRatedRecipe) {
+        this.userRatedRecipe = userRatedRecipe;
+    }
+
+    public List<String> getUsersWhoRatedRecipeId() {
+        return usersWhoRatedRecipeId;
+    }
+
+    public void setUsersWhoRatedRecipeId(List<String> usersWhoRatedRecipeId) {
+        this.usersWhoRatedRecipeId = usersWhoRatedRecipeId;
+    }
+
+    public String getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
     }
 
     public String getShortDescription() {
@@ -128,5 +162,10 @@ public class RecepieModel {
 
     public void setIngredients(List<IngredientsModel> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    @Override
+    public String toString() {
+        return id + creatorId + mealType + title + shortDescription + sumOfRating + totalPeopleRatedCount + factureDescription + factureDificulty + postDate;
     }
 }

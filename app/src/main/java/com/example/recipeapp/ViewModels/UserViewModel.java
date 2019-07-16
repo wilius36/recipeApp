@@ -25,6 +25,11 @@ public class UserViewModel extends AndroidViewModel {
         return userRepository.checkIfUserLoggedIn();
     }
 
+    //Patikrinamas vartotojo tipas
+    public void checkUserType(MyFirebaseCallBack<String> myFirebaseCallBack){
+        userRepository.checkUserType(myFirebaseCallBack);
+    }
+
     //Prisijungimas prie vartotojo profiliu
     public void signInUserWithEmailAndPassword(String email, String password, MyFirebaseCallBack<Boolean> myFirebaseCallBack){
         userRepository.signInUserWithEmailAndPassword(email, password, myFirebaseCallBack);
@@ -40,6 +45,7 @@ public class UserViewModel extends AndroidViewModel {
         userRepository.saveUserToDataBase(userModel, myFirebaseCallBack);
     }
 
+    //Gaunama vartotojo informacija
     public void getUserData(MyFirebaseCallBack<UserModel> myFirebaseCallBack){
         userRepository.getUserData(myFirebaseCallBack);
     }

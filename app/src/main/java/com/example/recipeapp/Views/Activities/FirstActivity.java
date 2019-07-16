@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.example.recipeapp.R;
 import com.example.recipeapp.ViewModels.UserViewModel;
 import com.example.recipeapp.Views.Fragments.LogRegUserFragments.FirstFragment;
-import com.example.recipeapp.R;
 
 public class FirstActivity extends AppCompatActivity {
 
@@ -41,7 +41,7 @@ public class FirstActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         if(userViewModel.checkIfUserLoggedIn() != null) {
-            //openMainActivity();
+            openMainActivity();
         }
     }
 

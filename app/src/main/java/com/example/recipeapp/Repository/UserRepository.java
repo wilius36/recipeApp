@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -121,6 +122,32 @@ public class UserRepository {
                 }
             }
         });
+    }
+
+    //Patikrinamas vartotojo tipas
+    public void checkUserType (final MyFirebaseCallBack<String> myFirebaseCallBack){
+
+        userCollectionReference.document(currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        String value = document.getString("type");
+                        if (value.equals("creator")){
+                            myFirebaseCallBack.onSuccessCallback("creator");
+                        } else {
+                            myFirebaseCallBack.onSuccessCallback("user");
+                        }
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
     }
 
 }

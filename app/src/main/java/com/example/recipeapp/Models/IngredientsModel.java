@@ -28,4 +28,9 @@ public class IngredientsModel {
     public void setIngredientName(String ingredientName) {
         this.ingredientName = ingredientName;
     }
+
+    @Override
+    public String toString() {
+        return amount + " " + ingredientName;
+    }
 }
